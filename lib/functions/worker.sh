@@ -248,6 +248,21 @@ function LintCodebase() {
           cd "${DIR_NAME}" || exit
           ${LINTER_COMMAND} "${FILE_NAME}" 2>&1
         )
+      ################################################################
+      # Corner case for CLANG_FORMAT as it needs additional commands #
+      ################################################################
+      elif [[ ${FILE_TYPE} == "CLANG_FORMAT" ]]; then
+        LINT_CMD=$(
+          LABEL=$(realpath --relative-to . "${FILE_NAME}")
+          if
+            ! clang-format --Werror --dry-run "${FILE_NAME}" |
+              tee /dev/null 2>&1
+            exit "${PIPESTATUS[0]}"
+          then
+            diff -u --label "${LABEL}" "${FILE_NAME}" --label "${LABEL}.expected" -
+            exit 1
+          fi
+        )
       else
         ################################
         # Lint the file with the rules #

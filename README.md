@@ -217,7 +217,7 @@ This allows users to choose which **Super-Linter** they want to run and potentia
 The available images:
 
 - `github/super-linter:v5`
-- `github/super-linter:slim-v5`
+- `github/super-linter/slim@v5`
 
 #### Standard Image
 
@@ -238,7 +238,7 @@ Example usage:
 
 #### Slim Image
 
-The slim `github/super-linter:slim-v5` comes with all supported linters but removes the following:
+The slim `github/super-linter/slim@v5` comes with all supported linters but removes the following:
 
 - `rust` linters
 - `dotenv` linters

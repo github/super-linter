@@ -51,12 +51,6 @@
 | JSONC_PRETTIER               | Fail ❌           |
 | JSX                          | Fail ❌           |
 | JSX_PRETTIER                 | Fail ❌           |
-| JUPYTER_NBQA_BLACK           | Fail ❌           |
-| JUPYTER_NBQA_FLAKE8          | Fail ❌           |
-| JUPYTER_NBQA_ISORT           | Fail ❌           |
-| JUPYTER_NBQA_MYPY            | Fail ❌           |
-| JUPYTER_NBQA_PYLINT          | Fail ❌           |
-| JUPYTER_NBQA_RUFF            | Fail ❌           |
 | KOTLIN                       | Fail ❌           |
 | KUBERNETES_KUBECONFORM       | Fail ❌           |
 | LATEX                        | Fail ❌           |
@@ -117,4 +111,6 @@ For more information, see the Super-linter summary
 (super-linter-output/super-linter-summary.md) and the Super-linter log
 (super-linter.log)
 
-Powered by [Super-linter](https://github.com/super-linter/super-linter)
+Powered by [Super-linter](https://github.com/super-linter/super-linter)\
+Super-linter revision: `${BUILD_REVISION}`\
+Super-linter version: `${BUILD_VERSION}`

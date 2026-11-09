@@ -2,6 +2,8 @@
 
 This document helps you upgrade from a super-linter version to newer ones:
 
+- [Upgrade from >=v9.0.0 to v10.0.0](#upgrade-from-v900-to-v1000)
+- [Upgrade from >=v8.4.0 to v9.0.0](#upgrade-from-v840-to-v900)
 - [Upgrade from >=v8.2.0 to v8.4.0](#upgrade-from-v820-to-v840)
 - [Upgrade from v8.1.0 to v8.2.0](#upgrade-from-v810-to-v820)
 - [Upgrade from v7.4.0 to v8.0.0](#upgrade-from-v740-to-v8)
@@ -9,6 +11,73 @@ This document helps you upgrade from a super-linter version to newer ones:
 - [Upgrade from v6 to v7](#upgrade-from-v6-to-v7)
 - [Upgrade from v6.7.0 to v6.8.0](#upgrade-from-v670-to-v680)
 - [Upgrade from v5 to v6](#upgrade-from-v5-to-v6)
+
+## Upgrade from >=v9.0.0 to v10.0.0
+
+This section helps you upgrade from Super-linter `>=v9.0.0` to `v10.0.0`.
+
+### Unused npm packages
+
+Super-linter `v10.0.0` doesn't ship the following npm packages anymore because
+no linter, and none of the configuration files that Super-linter ships, uses
+them:
+
+- `@babel/eslint-parser`
+- `@babel/preset-react`
+- `@babel/preset-typescript`
+- `eslint-plugin-react-hooks`
+- `next`
+- `react-dom`
+- `react-intl`
+- `react-redux`
+- `react-router-dom`
+
+This affects you if your ESLint configuration depends on one of these packages,
+for example if it sets `parser` to `@babel/eslint-parser`, or if ESLint resolved
+imports of `next` or `react-dom` from your code using the copies that
+Super-linter shipped. In that case, install the dependencies of your repository
+before running Super-linter, or build a container image based on the
+Super-linter image that includes the packages you need.
+
+## Upgrade from >=v8.4.0 to v9.0.0
+
+This section helps you upgrade from Super-linter `>=v8.4.0` to `v9.0.0`.
+
+### NBQA
+
+Super-linter `v9.0.0` removes support for NBQA because it's not being maintained
+anymore.
+
+You can remove the following variables from your Super-linter configuration:
+
+- `FIX_JUPYTER_NBQA_BLACK`
+- `FIX_JUPYTER_NBQA_ISORT`
+- `FIX_JUPYTER_NBQA_RUFF`
+- `JUPYTER_NBQA_BLACK_CONFIG_FILE`
+- `JUPYTER_NBQA_FLAKE8_CONFIG_FILE`
+- `JUPYTER_NBQA_ISORT_CONFIG_FILE`
+- `JUPYTER_NBQA_MYPY_CONFIG_FILE`
+- `JUPYTER_NBQA_PYLINT_CONFIG_FILE`
+- `JUPYTER_NBQA_RUFF_CONFIG_FILE`
+- `VALIDATE_JUPYTER_NBQA_BLACK`
+- `VALIDATE_JUPYTER_NBQA_FLAKE8`
+- `VALIDATE_JUPYTER_NBQA_ISORT`
+- `VALIDATE_JUPYTER_NBQA_MYPY`
+- `VALIDATE_JUPYTER_NBQA_PYLINT`
+- `VALIDATE_JUPYTER_NBQA_RUFF`
+
+### Jscpd and .gitignore
+
+Super-linter doesn't add the `--no-gitignore` or the `--gitignore` options
+according to the value of `IGNORE_GITIGNORED_FILES`. For more information, see
+the
+[Jscpd documentation](https://github.com/kucherenko/jscpd/blob/master/docs/rust.md#config-file).
+
+### Stylelint configuration file
+
+Change the stylelint configuration filename to `stylelint.config.mjs` and format
+from JSON to ES Module, as recommended by the
+[Stylelint documentation](https://stylelint.io/user-guide/configure).
 
 ## Upgrade from >=v8.2.0 to v8.4.0
 
@@ -22,7 +91,7 @@ updates.
 
 ### Terrascan
 
-Super-linter `v8.4.0` removes support for theTerrascan because it's not being
+Super-linter `v8.4.0` removes support for Terrascan because it's not being
 maintained anymore.
 
 You can remove the following variables from your Super-linter configuration:
@@ -246,7 +315,7 @@ This section helps you upgrade from super-linter `v5` to `v6`.
 - Jscpd doesn't consider the `FILTER_REGEX_EXCLUDE`, `FILTER_REGEX_INCLUDE`,
   `IGNORE_GENERATED_FILES` variables. For more information about how to ignore
   files with Jscpd, see
-  [the Jscpd documentation](https://github.com/kucherenko/jscpd/tree/master/apps/jscpd).
+  [the Jscpd documentation](https://github.com/kucherenko/jscpd/blob/master/docs/rust.md#config-file).
 
 ### USE_FIND_ALGORITHM and VALIDATE_ALL_CODEBASE used together
 

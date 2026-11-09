@@ -46,12 +46,6 @@
 | JSONC_PRETTIER             | Pass ✅           |
 | JSX                        | Pass ✅           |
 | JSX_PRETTIER               | Pass ✅           |
-| JUPYTER_NBQA_BLACK         | Pass ✅           |
-| JUPYTER_NBQA_FLAKE8        | Pass ✅           |
-| JUPYTER_NBQA_ISORT         | Pass ✅           |
-| JUPYTER_NBQA_MYPY          | Pass ✅           |
-| JUPYTER_NBQA_PYLINT        | Pass ✅           |
-| JUPYTER_NBQA_RUFF          | Pass ✅           |
 | KOTLIN                     | Pass ✅           |
 | KUBERNETES_KUBECONFORM     | Pass ✅           |
 | LATEX                      | Pass ✅           |
@@ -106,4 +100,6 @@ For more information, see the Super-linter summary
 (super-linter-output/custom-github-step-summary.md) and the Super-linter log
 (super-linter.log)
 
-Powered by [Super-linter](https://github.com/super-linter/super-linter)
+Powered by [Super-linter](https://github.com/super-linter/super-linter)\
+Super-linter revision: `${BUILD_REVISION}`\
+Super-linter version: `${BUILD_VERSION}`

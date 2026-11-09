@@ -16,6 +16,7 @@
 | DOTNET_SLN_FORMAT_ANALYZERS  | Pass ✅           |
 | DOTNET_SLN_FORMAT_STYLE      | Pass ✅           |
 | DOTNET_SLN_FORMAT_WHITESPACE | Pass ✅           |
+| EDITORCONFIG                 | Pass ✅           |
 | ENV                          | Pass ✅           |
 | GITHUB_ACTIONS_ZIZMOR        | Pass ✅           |
 | GO                           | Pass ✅           |
@@ -32,9 +33,6 @@
 | JSONC_PRETTIER               | Pass ✅           |
 | JSX                          | Fail ❌           |
 | JSX_PRETTIER                 | Pass ✅           |
-| JUPYTER_NBQA_BLACK           | Pass ✅           |
-| JUPYTER_NBQA_ISORT           | Pass ✅           |
-| JUPYTER_NBQA_RUFF            | Pass ✅           |
 | KOTLIN                       | Pass ✅           |
 | MARKDOWN                     | Pass ✅           |
 | MARKDOWN_PRETTIER            | Pass ✅           |
@@ -73,4 +71,6 @@ For more information, see the Super-linter summary
 (super-linter-output/super-linter-summary.md) and the Super-linter log
 (super-linter.log)
 
-Powered by [Super-linter](https://github.com/super-linter/super-linter)
+Powered by [Super-linter](https://github.com/super-linter/super-linter)\
+Super-linter revision: `${BUILD_REVISION}`\
+Super-linter version: `${BUILD_VERSION}`

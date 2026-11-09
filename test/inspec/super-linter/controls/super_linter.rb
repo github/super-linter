@@ -66,19 +66,19 @@ control "super-linter-installed-packages" do
     "openssh-client",
     "parallel",
     "perl",
-    "php84",
-    "php84-ctype",
-    "php84-curl",
-    "php84-dom",
-    "php84-iconv",
-    "php84-pecl-igbinary",
-    "php84-intl",
-    "php84-mbstring",
-    "php84-openssl",
-    "php84-phar",
-    "php84-simplexml",
-    "php84-tokenizer",
-    "php84-xmlwriter",
+    "php85",
+    "php85-ctype",
+    "php85-curl",
+    "php85-dom",
+    "php85-iconv",
+    "php85-pecl-igbinary",
+    "php85-intl",
+    "php85-mbstring",
+    "php85-openssl",
+    "php85-phar",
+    "php85-simplexml",
+    "php85-tokenizer",
+    "php85-xmlwriter",
     "R",
     "ruby",
     "rust-clippy",
@@ -109,7 +109,7 @@ control "super-linter-uninstalled-packages" do
 
   packages = [
     "cmake",
-    "clang17-extra-tools",
+    "clang22-extra-tools",
     "g++",
     "gnupg",
     "libc-dev",
@@ -188,7 +188,6 @@ control "super-linter-installed-commands" do
     { linter_name: "lua", version_option: "-v" },
     { linter_name: "markdownlint" },
     { linter_name: "mypy" },
-    { linter_name: "nbqa" },
     { linter_name: "npm-groovy-lint" },
     { linter_name: "perl" },
     { linter_name: "php" },
@@ -335,9 +334,6 @@ control "super-linter-installed-npm-packages" do
   desc "Check that NPM packages that Super-Linter needs are installed."
 
   packages = [
-    "@babel/eslint-parser",
-    "@babel/preset-react",
-    "@babel/preset-typescript",
     "@biomejs/biome",
     "@coffeelint/cli",
     "@commitlint/config-conventional",
@@ -355,19 +351,13 @@ control "super-linter-installed-npm-packages" do
     "eslint-plugin-n",
     "eslint-plugin-prettier",
     "eslint-plugin-react",
-    "eslint-plugin-react-hooks",
     "eslint-plugin-vue",
     "htmlhint",
     "jscpd",
     "markdownlint-cli",
-    "next",
     "npm-groovy-lint",
     "prettier",
     "react",
-    "react-dom",
-    "react-intl",
-    "react-redux",
-    "react-router-dom",
     "renovate",
     "stylelint",
     "stylelint-config-recommended-scss",
@@ -407,7 +397,6 @@ control "super-linter-installed-pypi-packages" do
     "flake8",
     "isort",
     "mypy",
-    "nbqa",
     "pylint",
     "pre-commit",
     "ruff",
@@ -419,9 +408,13 @@ control "super-linter-installed-pypi-packages" do
     "zizmor",
   ]
 
+  # The virtual environments don't ship their own pip (see
+  # scripts/build-venvs.sh), so the InSpec pip resource, which needs a pip
+  # binary inside the environment, can't inspect them. Ask the pip of the base
+  # interpreter about the environment instead.
   pypi_packages.each do |item|
-    describe pip(item, "/venvs/#{item}/bin/pip") do
-      it { should be_installed }
+    describe command("pip --python /venvs/#{item}/bin/python show #{item}") do
+      its("exit_status") { should eq 0 }
     end
   end
 end
@@ -515,7 +508,6 @@ control "super-linter-validate-files" do
     "/action/lib/.automation/.luacheckrc",
     "/action/lib/.automation/.markdown-lint.yml",
     "/action/lib/.automation/.mypy.ini",
-    "/action/lib/.automation/.jupyter-nbqa.toml",
     "/action/lib/.automation/.openapirc.yml",
     "/action/lib/.automation/.perlcriticrc",
     "/action/lib/.automation/.powershell-psscriptanalyzer.psd1",
@@ -529,13 +521,13 @@ control "super-linter-validate-files" do
     "/action/lib/.automation/.shellcheckrc",
     "/action/lib/.automation/.snakefmt.toml",
     "/action/lib/.automation/.sqlfluff",
-    "/action/lib/.automation/.stylelintrc.json",
     "/action/lib/.automation/.tflint.hcl",
     "/action/lib/.automation/.yaml-lint.yml",
     "/action/lib/.automation/eslint.config.mjs",
     "/action/lib/.automation/phpcs.xml",
     "/action/lib/.automation/phpstan.neon",
     "/action/lib/.automation/psalm.xml",
+    "/action/lib/.automation/stylelint.config.mjs",
     "/action/lib/.automation/trivy.yaml",
     "/action/lib/.automation/zizmor.yaml",
     "/usr/bin/bash-exec",

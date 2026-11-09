@@ -185,13 +185,6 @@ fi
 LINTER_COMMANDS_ARRAY_JAVASCRIPT_ES=(eslint -c "${JAVASCRIPT_ES_LINTER_RULES}")
 LINTER_COMMANDS_ARRAY_JAVASCRIPT_PRETTIER=("${PRETTIER_COMMAND[@]}")
 LINTER_COMMANDS_ARRAY_JSCPD=(jscpd --config "${JSCPD_LINTER_RULES}")
-JSCPD_GITIGNORE_OPTION="--gitignore"
-if [[ "${IGNORE_GITIGNORED_FILES}" == "true" ]]; then
-  debug "IGNORE_GITIGNORED_FILES is ${IGNORE_GITIGNORED_FILES}. Enable Jscpd option to ignore files that Git ignores (${JSCPD_GITIGNORE_OPTION})"
-  # Users can also add the '"gitignore": true' option in their Jscpd config files to achieve the same functionality
-  # but we want to respect IGNORE_GITIGNORED_FILES
-  LINTER_COMMANDS_ARRAY_JSCPD+=("${JSCPD_GITIGNORE_OPTION}")
-fi
 LINTER_COMMANDS_ARRAY_JSON=(eslint -c "${JAVASCRIPT_ES_LINTER_RULES}")
 LINTER_COMMANDS_ARRAY_JSON_PRETTIER=("${PRETTIER_COMMAND[@]}")
 LINTER_COMMANDS_ARRAY_JSONC=(eslint -c "${JAVASCRIPT_ES_LINTER_RULES}")
@@ -277,6 +270,9 @@ LINTER_COMMANDS_ARRAY_SPELL_CODESPELL=(codespell --config "${SPELL_CODESPELL_LIN
 LINTER_COMMANDS_ARRAY_STATES=(asl-validator --json-path)
 LINTER_COMMANDS_ARRAY_SQLFLUFF=(sqlfluff)
 LINTER_COMMANDS_ARRAY_TERRAFORM_FMT=(terraform fmt)
+# The TF_DATA_DIR path must match the one that RunAdditionalInstalls (in
+# detectFiles.sh) uses when fetching Terraform modules, so that TFLint finds
+# the modules fetched for the directory that contains the file to lint.
 LINTER_COMMANDS_ARRAY_TERRAFORM_TFLINT=("TF_DATA_DIR=\"/tmp/.terraform-TERRAFORM_TFLINT-{//}\"" tflint -c "${TERRAFORM_TFLINT_LINTER_RULES}" "--filter=\"{/}\"")
 LINTER_COMMANDS_ARRAY_TERRAGRUNT=(terragrunt hcl format --check --log-level error --file)
 LINTER_COMMANDS_ARRAY_TRIVY=(trivy filesystem --config "${TRIVY_LINTER_RULES}")
@@ -297,14 +293,3 @@ if [ "${YAML_ERROR_ON_WARNING:-}" == 'true' ]; then
   LINTER_COMMANDS_ARRAY_YAML+=(--strict)
 fi
 LINTER_COMMANDS_ARRAY_YAML_PRETTIER=("${PRETTIER_COMMAND[@]}")
-
-# Reuse executable names from python tools.
-# But use different args to allow for different config files.
-# The format is: nbqa <code quality tool> <notebook or directory> <nbqa options> <code quality tool arguments>
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_BLACK=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_BLACK[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" --config "${JUPYTER_NBQA_BLACK_LINTER_RULES}")
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_FLAKE8=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_FLAKE8[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" "--config=${JUPYTER_NBQA_FLAKE8_LINTER_RULES}")
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_ISORT=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_ISORT[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" --sp "${JUPYTER_NBQA_ISORT_LINTER_RULES}")
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_MYPY=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_MYPY[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" --config-file "${JUPYTER_NBQA_MYPY_LINTER_RULES}" --install-types --non-interactive)
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_PYLINT=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_PYLINT[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" --rcfile "${JUPYTER_NBQA_PYLINT_LINTER_RULES}")
-# Strip the "check" subcommand because nbqa adds it already
-LINTER_COMMANDS_ARRAY_JUPYTER_NBQA_RUFF=("${NBQA_EXECUTABLE_NAME[@]}" "${LINTER_COMMANDS_ARRAY_PYTHON_RUFF[0]}" "{}" "${NBQA_SHELL_OPTION[@]}" --config "${JUPYTER_NBQA_RUFF_LINTER_RULES}")
